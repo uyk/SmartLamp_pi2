@@ -1,13 +1,38 @@
-var express = require('express');
+var express = require("express");
+var bodyParser = require("body-parser");
+var request = require('request');
 
 var app = express();
 var port = 5000;
 
-app.get('/', function (req, res) {
-  console.log("Get request");
-  res.send('Hello World!');
-})
+var optionsSmartLamp = {
+	uri : "http://218.150.183.150:3000/smartLamp",
+	method : "GET",
+	headers : { "Content-Type" : "application/x-www-form-urlencoded"},
+}
 
-app.listen(port, function () {
-  console.log('Raspberry pi server is listening on port 5000!');
-})
+app.use(bodyParser.urlencoded( {extended : false } ));
+
+app.get('/', function(req,res) {
+	console.log('smart void lamp');
+	res.send('Smart Voice Lamp');
+});
+
+app.listen(port,function() {
+	console.log("create Server");
+
+	//1초마다 smartLamp 함수 호출
+	setInterval(smartLamp,1000);
+});
+
+function smartLamp() {
+	//GET 요청 전송
+	request(optionsSmartLamp, function(error, response, body) {
+		if(body == "empty" ) {
+			console.log("no data");
+		}
+		else {
+			console.log(body);
+		}
+	});
+}
