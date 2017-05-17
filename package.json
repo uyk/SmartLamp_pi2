@@ -17,6 +17,11 @@
   },
   "homepage": "https://github.com/uyk/Smartlamp_pi2#readme",
   "dependencies": {
-    "express": "^4.15.2"
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "lame": "^1.2.4",
+    "python-shell": "^0.4.0",
+    "request": "^2.81.0",
+    "speaker": "^0.3.0"
   }
 }
