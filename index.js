@@ -1,7 +1,7 @@
 var express = require("express");
 var request = require('request');
-var PythonShell = require('python-shell');
 var fs = require('fs');
+var exec = require('child_process').exec;
 
 var app = express();
 var port = 5000;
@@ -12,14 +12,21 @@ var optionsSmartLamp = {
 	method : "GET",
 	headers : { "Content-Type" : "application/x-www-form-urlencoded"},
 };
-
-var optionsMP3 = {
-	uri : 'http://218.150.183.150:3000/tts1.mp3'
+var client_id = 'fa5RCa6jbNzwl9FnkdKj';
+var client_secret = 'Xdfz2Cg1kr';
+var optionsTTS = {
+    url: "https://openapi.naver.com/v1/voice/tts.bin",
+    form: {'speaker':'mijin', 'speed':'0', 'text':''},
+    headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
 };
 
 app.get('/', function(req,res) {
 	console.log('smart void lamp');
-	res.send('Smart Voice Lamp');
+	fs.readFile('hello.html', function(err,data) {
+		res.writeHead(200, {'Content-Type' : 'text/html'});
+		res.end(data);
+	});
+//	res.send('Smart Voice Lamp');
 });
 
 app.listen(port,function() {
@@ -37,14 +44,19 @@ function smartLamp() {
 		}
 		else {
 			console.log(body);
-			var writeStream = fs.createWriteStream('./tts.mp3');
-			var _req = request.get(optionsMP3).on('response', function(response) {
+			optionsTTS.form.text=body;
+			var writeStream = fs.createWriteStream('./newTTS.mp3');
+			var _req = request.post(optionsTTS).on('response', function(response) {
 				console.log(response.statusCode);
 				console.log(response.headers['content-type']);
 			});
 			_req.pipe(writeStream);
-			var audio = new Audio('tts.mp3');
-			audio.play();
+			work = exec('chromium-browser -no-sandbox http://218.150.183.150:3000/tts1.mp3',function(err, stdout, stderr) {
+				if(err) {
+					console.log("ERROR");
+				}
+				console.log(stdout);
+			});
 		}
 	});
 }

@@ -1,0 +1,98 @@
+<!DOCCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+    <script>
+        var httpRequest;
+        //var audio = new Audio();
+        if (annyang) {
+            // Let's define a command.
+            var commands = {
+                '반가워': function() {
+                    newHttpRequest();
+                    httpRequest.send("tyoe=hello");
+                },
+                '지금 몇시야': function () {
+                    newHttpRequest();
+                    httpRequest.send("type=time");
+                },
+                '오늘이 며칠이야': function () {
+                    newHttpRequest();
+                    httpRequest.send("type=day");
+                },
+                '오늘 날씨가 어때' : function() {
+                    newHttpRequest();
+                    httpRequest.send("type=weather&day=today");
+                },
+                '내일 날씨가 어때' : function() {
+                    newHttpRequest();
+                    httpRequest.send("type=weather&day=tomorrow");
+                },
+                '페이스북에 올려줘 기분 좋다' : function() {
+                    newHttpRequest();
+                    httpRequest.send("type=facebook&content=기분좋다");
+                },
+                '빨간색' : function() {
+                    newHttpRequest();
+                    httpRequest.send("type=color&color=red");
+                },
+                '파란색' : function() {
+                    newHttpRequest();
+                    httpRequest.send("type=color&color=blue");
+                },
+                '녹색' : function() {
+                    newHttpRequest();
+                    httpRequest.send("type=color&color=green");
+                },
+                '무지개' : function() {
+                    newHttpRequest();
+                    httpRequest.send("type=color&color=rainbow");
+                },
+                '잘자' : function() {
+			alert('aa');
+                    newHttpRequest();
+                    httpRequest.send("type=color&color=off");
+                },
+                '안녕' : function() {
+			alert('bb');
+                    newHttpRequest();
+                    httpRequest.send("type=color&color=on");
+                },
+            };
+            annyang.setLanguage("ko");
+            // Add our commands to annyang
+            annyang.addCommands(commands);
+            // Start listening.
+            annyang.start();
+        }
+        function newHttpRequest() {
+            httpRequest = new XMLHttpRequest();
+            if (!httpRequest) {
+                alert('Giving up :( Cannot create an XMLHTTP instance');
+            }
+            httpRequest.onreadystatechange = alertContents;
+            httpRequest.open('POST', 'http:///218.150.183.150:3000/voice');
+            httpRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        }
+        function alertContents() {
+            if (httpRequest.readyState === 4) {
+                //alert("d");
+                //var audio = new Audio();
+                //audio.src = 'http://218.150.183.150:3000/tts1.mp3';
+                //audio.play();
+                /*
+                if (httpRequest.status === 200) {
+                    alert(httpRequest.responseText);
+                } else {
+                    alert(httpRequest.status);
+                }*/
+            }
+        }
+    </script>
+</body>
+</html>
+
