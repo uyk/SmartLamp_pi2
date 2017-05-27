@@ -14,7 +14,7 @@
             var commands = {
                 '반가워': function() {
                     newHttpRequest();
-                    httpRequest.send("tyoe=hello");
+                    httpRequest.send("type=hello");
                 },
                 '지금 몇시야': function () {
                     newHttpRequest();
@@ -53,12 +53,10 @@
                     httpRequest.send("type=color&color=rainbow");
                 },
                 '잘자' : function() {
-			alert('aa');
                     newHttpRequest();
                     httpRequest.send("type=color&color=off");
                 },
                 '안녕' : function() {
-			alert('bb');
                     newHttpRequest();
                     httpRequest.send("type=color&color=on");
                 },
